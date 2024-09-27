@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero {
+            height: 100vh;
+            background: url('static/hosp.jpg') no-repeat center center;                  
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: black;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.25rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            .hero p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body onload="restrictPastDate()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#appointment">Appointment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#admin">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="text-center">
+            <h1>Welcome to Our Hospital</h1>
+            <p class="lead">Caring for you always</p>
+            <a href="#services" class="btn btn-primary btn-lg">Learn More</a>
+        </div>
+    </section>
+
+    <section id="services" class="py-5">
+        <div class="container">
+            <div class="text-center">
+                <h2>Our Services</h2>
+                <p class="lead">We offer a wide range of healthcare services to meet your needs.</p>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="static/emergency.jpg" class="card-img-top" alt="Emergency care">
+                        <div class="card-body">
+                            <h5 class="card-title">Emergency</h5>
+                            <p class="card-text">Quick and effective emergency services available 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card">
+                        <img src="static/heart.jpg" class="card-img-top" alt="Emergency care">
+                        <div class="card-body">
+                            <h5 class="card-title">Cardiology</h5>
+                            <p class="card-text">Expert cardiac care to keep your heart healthy and strong.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card">
+                        <img src="static/pediatrics.jpg" class="card-img-top" alt="Emergency care">
+                        <div class="card-body">
+                            <h5 class="card-title">Pediatrics</h5>
+                            <p class="card-text">Comprehensive care for children from birth to adolescence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="appointment" class="py-5 bg-light">
+        <div class="container">
+            <h1>Appointment Form</h1>
+            <form action="/submit" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mail" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Appointment Date</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-success mt-3" role="alert">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <br>
+            <a href="{{ url_for('login') }}" class="btn btn-danger">Admin Login</a>
+        </div>
+    </section>
+
+    <footer class="bg-info text-white text-center py-3">
+        <p>2024 Hospital Name. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function restrictPastDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').setAttribute('min', today);
+        }
+    </script>
+</body>
+</html>
+
